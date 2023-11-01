@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-/*public class UIScore : MonoBehaviour
+public class UIScore : MonoBehaviour
 {
     private TextMeshProUGUI tmproText;
 
@@ -15,7 +15,7 @@ using TMPro;
     private void Start()
     {
         GameManager.instance.OnScoreChanged += HandleOnScoreChanged;
-        tmproText.text = GameManager.instance.Scores.ToString();
+        tmproText.text = ("Total Score: " + GameManager.instance.Scores.ToString());
     }
 
 
@@ -24,4 +24,4 @@ using TMPro;
     {
         tmproText.text = score.ToString();
     }
-}*/
+}

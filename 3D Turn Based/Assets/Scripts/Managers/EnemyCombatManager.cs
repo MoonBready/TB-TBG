@@ -39,7 +39,6 @@ public class EnemyCombatManager : MonoBehaviour
 
     void DecideCombatAction()
     {
-        //Do we need to heal self or team
         if(HasCombatActionOfType(typeof(HealCombatAction)))
         {
             Character weakestEnemy = GetWeakestCharacter(Character.Team.Enemy);
@@ -50,8 +49,7 @@ public class EnemyCombatManager : MonoBehaviour
                 return;
             }
         }
-
-        //deal damage 
+ 
         Character playerToDamage;
 
         if(Random.value < attackWeakestChance)

@@ -1,8 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Runtime.CompilerServices;
 
 public class GameManager : MonoBehaviour
 {
@@ -24,10 +24,14 @@ public class GameManager : MonoBehaviour
     public static CharacterSet curEnemySet;
     private float totalGameTime;
 
+    public int Scores { get; private set; }
+
     public float timer;
     public event System.Action<float> OnTimerChanged;
     private bool isTimerOn;
     private float currentTimer;
+
+    public event Action<int> OnScoreChanged;
 
     public float Timer
     {
@@ -38,6 +42,7 @@ public class GameManager : MonoBehaviour
     {
         get { return totalGameTime; }
     }
+
 
     private void Update()
     {
@@ -67,6 +72,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            Scores = 0;
             instance = this;
         }
     }
@@ -143,6 +149,7 @@ public class GameManager : MonoBehaviour
         if(enemiesRemaining == 0)
         {
             PlayerTeamWins();
+            GameManager.instance.AddScore(10);
         }
         else if (playerRemaining == 0)
         {
@@ -161,6 +168,8 @@ public class GameManager : MonoBehaviour
         //*** NEED TO ADD GAME OVER SCREEN HERE AND SEND TO MAIN MENU OR BEGINNING OF THE MAP(CUZ EASIER) *** 
         playerPersistentData.ResetCharacter();
         Invoke(nameof(LoadMapScene), 1f);
+        //GameManager.instance.Scores.ToString()
+        SceneManager.LoadScene("End");
     }
 
     void UpdatePlayerPersistentData()
@@ -176,6 +185,13 @@ public class GameManager : MonoBehaviour
                 playerPersistentData.characters[i].isDead = true;
             }
         }
+    }
+
+    internal void AddScore(int points)
+    {
+        Scores += points;
+
+        OnScoreChanged?.Invoke(Scores);
     }
 
     void LoadMapScene()
