@@ -166,10 +166,10 @@ public class GameManager : MonoBehaviour
     void EnemyTeamsWins()
     {
         //Game Over
+        SceneManager.LoadScene("End");
         playerPersistentData.ResetCharacter();
         Invoke(nameof(LoadMapScene), 1f);
         GameManager.instance.Scores.ToString();
-        SceneManager.LoadScene("End");
     }
 
     void UpdatePlayerPersistentData()
