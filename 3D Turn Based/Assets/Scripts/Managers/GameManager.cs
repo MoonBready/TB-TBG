@@ -25,13 +25,15 @@ public class GameManager : MonoBehaviour
     private float totalGameTime;
 
     public int Scores { get; private set; }
+    public event Action<int> OnScoreChanged;
 
     public float timer;
     public event System.Action<float> OnTimerChanged;
     private bool isTimerOn;
     private float currentTimer;
 
-    public event Action<int> OnScoreChanged;
+    [SerializeField] private string targetTag = "LastStage";
+    //[SerializeField] private string sceneToLoad = "End";
 
     public float Timer
     {
@@ -159,8 +161,15 @@ public class GameManager : MonoBehaviour
 
     void PlayerTeamWins()
     {
-        UpdatePlayerPersistentData();
-        Invoke(nameof(LoadMapScene), 1f);
+        if (gameObject.CompareTag(targetTag))
+        {
+            SceneManager.LoadScene("End");
+        }
+        else
+        {
+            UpdatePlayerPersistentData();
+            Invoke(nameof(LoadMapScene), 1f);
+        }
     }
 
     void EnemyTeamsWins()
@@ -168,7 +177,7 @@ public class GameManager : MonoBehaviour
         //*** NEED TO ADD GAME OVER SCREEN HERE AND SEND TO MAIN MENU OR BEGINNING OF THE MAP(CUZ EASIER) *** 
         playerPersistentData.ResetCharacter();
         Invoke(nameof(LoadMapScene), 1f);
-        //GameManager.instance.Scores.ToString()
+        GameManager.instance.Scores.ToString();
         SceneManager.LoadScene("End");
     }
 
