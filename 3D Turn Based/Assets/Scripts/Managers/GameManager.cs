@@ -32,8 +32,6 @@ public class GameManager : MonoBehaviour
     private bool isTimerOn;
     private float currentTimer;
 
-    [SerializeField] private string targetTag = "LastStage";
-    [SerializeField] private string sceneToLoad = "End";
 
     public float Timer
     {
@@ -161,15 +159,8 @@ public class GameManager : MonoBehaviour
 
     void PlayerTeamWins()
     {
-        if (gameObject.CompareTag(targetTag))
-        {
-            SceneManager.LoadScene(sceneToLoad);
-        }
-        else
-        {
             UpdatePlayerPersistentData();
             Invoke(nameof(LoadMapScene), 1f);
-        }
     }
 
     void EnemyTeamsWins()
@@ -178,7 +169,7 @@ public class GameManager : MonoBehaviour
         playerPersistentData.ResetCharacter();
         Invoke(nameof(LoadMapScene), 1f);
         GameManager.instance.Scores.ToString();
-        SceneManager.LoadScene(sceneToLoad);
+        SceneManager.LoadScene("End");
     }
 
     void UpdatePlayerPersistentData()
